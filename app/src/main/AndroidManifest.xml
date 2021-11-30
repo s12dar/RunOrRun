@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RunOrRun">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="true"
             android:launchMode="singleInstance">
             <intent-filter>
