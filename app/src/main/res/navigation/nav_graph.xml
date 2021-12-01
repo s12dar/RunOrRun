@@ -20,7 +20,7 @@
         android:label="fragment_run"
         tools:layout="@layout/fragment_run" >
         <action
-            android:id="@+id/action_runFragment_to_trackingFragment2"
+            android:id="@+id/action_runFragment_to_trackingFragment"
             app:destination="@id/trackingFragment" />
     </fragment>
     <fragment

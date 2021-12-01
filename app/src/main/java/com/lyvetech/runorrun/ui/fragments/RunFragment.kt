@@ -8,7 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
- import com.lyvetech.runorrun.databinding.FragmentRunBinding
+import androidx.navigation.fragment.findNavController
+import com.lyvetech.runorrun.R
+import com.lyvetech.runorrun.databinding.FragmentRunBinding
 import com.lyvetech.runorrun.ui.viewmodels.MainViewModel
 import com.lyvetech.runorrun.utils.Constants.Companion.REQUEST_LOCATION_PERMISSION
 import com.lyvetech.runorrun.utils.TrackingUtility
@@ -38,6 +40,10 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requestLocationPermissions()
+
+        binding.fabAdd.setOnClickListener {
+            findNavController().navigate(R.id.action_runFragment_to_trackingFragment)
+        }
     }
 
     private fun requestLocationPermissions() {
