@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/runFragment"
-        android:title="@string/menu_run"
-        android:icon="@drawable/ic_run_24dp"/>
+    <item
+        android:id="@+id/runFragment"
+        android:icon="@drawable/ic_run_24dp"
+        android:title="@string/menu_run" />
 
-    <item android:id="@+id/statisticsFragment"
-        android:title="@string/menu_statistics"
-        android:icon="@drawable/ic_statistics_24dp"/>
+    <item
+        android:id="@+id/statisticsFragment"
+        android:icon="@drawable/ic_statistics_24dp"
+        android:title="@string/menu_statistics" />
 
-    <item android:id="@+id/settingsFragment"
-        android:title="@string/menu_settings"
-        android:icon="@drawable/ic_settings_24dp"/>
+    <item
+        android:id="@+id/settingsFragment"
+        android:icon="@drawable/ic_settings_24dp"
+        android:title="@string/menu_settings" />
 </menu>
