@@ -1,17 +1,21 @@
 package com.lyvetech.runorrun.ui.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.viewModels
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.lyvetech.runorrun.R
 import com.lyvetech.runorrun.databinding.FragmentTrackingBinding
+import com.lyvetech.runorrun.services.TrackingService
 import com.lyvetech.runorrun.ui.viewmodels.MainViewModel
+import com.lyvetech.runorrun.utils.Constants.Companion.ACTION_START_OR_RESUME_SERVICE
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_tracking.*
 
@@ -20,8 +24,10 @@ class TrackingFragment : Fragment() {
 
     private val viewModel: MainViewModel by viewModels()
 
+    private var TAG = TrackingFragment::class.qualifiedName
     private lateinit var binding: FragmentTrackingBinding
     private lateinit var bottomSheetDialog: BottomSheetDialog
+    private lateinit var mBtnStart: Button
 
     private var map: GoogleMap? = null
 
@@ -39,6 +45,7 @@ class TrackingFragment : Fragment() {
         // Bottom sheet layout components
         bottomSheetDialog = context?.let { BottomSheetDialog(it) }!!
         bottomSheetDialog.setContentView(R.layout.bottom_sheet_tracking)
+        mBtnStart = bottomSheetDialog.findViewById(R.id.btn_start)!!
 
         return binding.root
     }
@@ -50,9 +57,20 @@ class TrackingFragment : Fragment() {
         mapView.getMapAsync {
             map = it
         }
+
         bottomSheetDialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
         bottomSheetDialog.show()
+
+        mBtnStart.setOnClickListener {
+            sendCommandToTrackingService(ACTION_START_OR_RESUME_SERVICE)
+        }
     }
+
+    private fun sendCommandToTrackingService(sendAction: String) =
+        Intent(requireContext(), TrackingService::class.java).also {
+            it.action = sendAction
+            requireContext().startService(it)
+        }
 
     override fun onResume() {
         super.onResume()
