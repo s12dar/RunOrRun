@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.lyvetech.runorrun.R
-import com.lyvetech.runorrun.ui.viewmodels.MainViewModel
 import com.lyvetech.runorrun.ui.viewmodels.StatisticsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
