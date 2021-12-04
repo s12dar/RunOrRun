@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.fragment.app.viewModels
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -23,6 +24,7 @@ import com.lyvetech.runorrun.utils.Constants.Companion.ACTION_START_OR_RESUME_SE
 import com.lyvetech.runorrun.utils.Constants.Companion.MAP_ZOOM
 import com.lyvetech.runorrun.utils.Constants.Companion.POLYLINE_COLOR
 import com.lyvetech.runorrun.utils.Constants.Companion.POLYLINE_WIDTH
+import com.lyvetech.runorrun.utils.TrackingUtility
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_tracking.*
 
@@ -33,12 +35,15 @@ class TrackingFragment : Fragment() {
 
     private var TAG = TrackingFragment::class.qualifiedName
     private lateinit var binding: FragmentTrackingBinding
+
     private lateinit var bottomSheetDialog: BottomSheetDialog
     private lateinit var mBtnStart: Button
     private lateinit var mBtnFinish: Button
+    private lateinit var mTvTimer: TextView
 
     private var map: GoogleMap? = null
 
+    private var currTimeMillis = 0L
     private var mIsTracking = false
     private var mPathPoints = mutableListOf<Polyline>()
 
@@ -58,6 +63,7 @@ class TrackingFragment : Fragment() {
         bottomSheetDialog.setContentView(R.layout.bottom_sheet_tracking)
         mBtnStart = bottomSheetDialog.findViewById(R.id.btn_start)!!
         mBtnFinish = bottomSheetDialog.findViewById(R.id.btn_finish)!!
+        mTvTimer = bottomSheetDialog.findViewById(R.id.tv_timer)!!
 
         return binding.root
     }
@@ -90,6 +96,12 @@ class TrackingFragment : Fragment() {
             mPathPoints = it
             addLatestPolyline()
             moveCameraToUser()
+        }
+
+        TrackingService.timeRunInMillis.observe(viewLifecycleOwner) {
+            currTimeMillis = it
+            val formattedTime = TrackingUtility.getFormattedStopWatchTime(currTimeMillis, true)
+            mTvTimer.text = formattedTime
         }
     }
 
