@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.PolylineOptions
@@ -21,6 +22,7 @@ import com.lyvetech.runorrun.services.TrackingService
 import com.lyvetech.runorrun.ui.viewmodels.MainViewModel
 import com.lyvetech.runorrun.utils.Constants.Companion.ACTION_PAUSE_SERVICE
 import com.lyvetech.runorrun.utils.Constants.Companion.ACTION_START_OR_RESUME_SERVICE
+import com.lyvetech.runorrun.utils.Constants.Companion.ACTION_STOP_SERVICE
 import com.lyvetech.runorrun.utils.Constants.Companion.MAP_ZOOM
 import com.lyvetech.runorrun.utils.Constants.Companion.POLYLINE_COLOR
 import com.lyvetech.runorrun.utils.Constants.Companion.POLYLINE_WIDTH
@@ -84,6 +86,10 @@ class TrackingFragment : Fragment() {
             startRun()
         }
 
+        binding.fabCancelRun.setOnClickListener {
+            stopRun()
+        }
+
         subscribeToObservers()
     }
 
@@ -106,6 +112,7 @@ class TrackingFragment : Fragment() {
     }
 
     private fun startRun() {
+        binding.fabCancelRun.visibility = View.VISIBLE
         if (mIsTracking) {
             sendCommandToTrackingService(ACTION_PAUSE_SERVICE)
         } else {
@@ -119,9 +126,15 @@ class TrackingFragment : Fragment() {
             mBtnStart.text = R.string.btn_start.toString()
             mBtnFinish.visibility = View.VISIBLE
         } else {
+            binding.fabCancelRun.visibility = View.VISIBLE
             mBtnStart.text = R.string.btn_finish_run.toString()
             mBtnFinish.visibility = View.GONE
         }
+    }
+
+    private fun stopRun() {
+        sendCommandToTrackingService(ACTION_STOP_SERVICE)
+        findNavController().navigate(R.id.action_trackingFragment_to_runFragment)
     }
 
     private fun moveCameraToUser() {
