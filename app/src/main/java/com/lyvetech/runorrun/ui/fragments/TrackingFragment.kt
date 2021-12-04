@@ -15,6 +15,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lyvetech.runorrun.R
 import com.lyvetech.runorrun.databinding.FragmentTrackingBinding
 import com.lyvetech.runorrun.services.Polyline
@@ -87,7 +88,12 @@ class TrackingFragment : Fragment() {
         }
 
         binding.fabCancelRun.setOnClickListener {
-            stopRun()
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Cancel the run?")
+                .setMessage("Are you sure you want to cancel the current run and delete all data?")
+                .setPositiveButton("Yes") { _, _ -> stopRun() }
+                .setNegativeButton("No") { _, _ -> }
+                .show()
         }
 
         subscribeToObservers()
