@@ -1,11 +1,12 @@
 package com.lyvetech.runorrun.services
 
 import android.annotation.SuppressLint
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.NotificationManager.IMPORTANCE_LOW
 import android.app.PendingIntent
-import android.app.PendingIntent.FLAG_UPDATE_CURRENT
+import android.app.PendingIntent.*
 import android.content.Context
 import android.content.Intent
 import android.location.Location
@@ -35,21 +36,28 @@ import com.lyvetech.runorrun.utils.Constants.Companion.NOTIFICATION_CHANNEL_NAME
 import com.lyvetech.runorrun.utils.Constants.Companion.NOTIFICATION_ID
 import com.lyvetech.runorrun.utils.Constants.Companion.TIMER_UPDATE_INTERVAL
 import com.lyvetech.runorrun.utils.TrackingUtility
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 typealias Polyline = MutableList<LatLng>
 typealias Polylines = MutableList<Polyline>
 
+@AndroidEntryPoint
 class TrackingService : LifecycleService() {
     private var TAG = TrackingService::class.qualifiedName
     private var isFirstRun = true
+    private val timeRunInSeconds = MutableLiveData<Long>()
+    private lateinit var currentNotificationBuilder: NotificationCompat.Builder
 
+    @Inject
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
-    private val timeRunInSeconds = MutableLiveData<Long>()
+    @Inject
+    private lateinit var baseNotificationBuilder: NotificationCompat.Builder
 
     companion object {
         val timeRunInMillis = MutableLiveData<Long>()
@@ -68,7 +76,6 @@ class TrackingService : LifecycleService() {
     override fun onCreate() {
         super.onCreate()
         postInitialValues()
-        fusedLocationProviderClient = FusedLocationProviderClient(this)
         isTracking.observe(this) {
             updateLocationTracking(it)
         }
@@ -151,16 +158,6 @@ class TrackingService : LifecycleService() {
         pathPoints.postValue(this)
     } ?: pathPoints.postValue(mutableListOf(mutableListOf()))
 
-    @SuppressLint("UnspecifiedImmutableFlag")
-    private fun getMainActivityPendingIntent() = PendingIntent.getActivity(
-        this,
-        0,
-        Intent(this, MainActivity::class.java).also {
-            it.action = ACTION_SHOW_TRACKING_FRAGMENT
-        },
-        FLAG_UPDATE_CURRENT
-    )
-
     private fun startForegroundService() {
         startTimer()
         isTracking.postValue(true)
@@ -172,14 +169,7 @@ class TrackingService : LifecycleService() {
             createNotificationChannel(notificationManager)
         }
 
-        val notificationBuilder = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-            .setAutoCancel(false)
-            .setOngoing(true)
-            .setSmallIcon(R.drawable.ic_run_24dp)
-            .setContentTitle("00:00:00")
-            .setContentIntent(getMainActivityPendingIntent())
-
-        startForeground(NOTIFICATION_ID, notificationBuilder.build())
+        startForeground(NOTIFICATION_ID, baseNotificationBuilder.build())
     }
 
     private var isTimerEnabled = false
