@@ -50,10 +50,10 @@ class TrackingService : LifecycleService() {
     private lateinit var currentNotificationBuilder: NotificationCompat.Builder
 
     @Inject
-    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
     @Inject
-    private lateinit var baseNotificationBuilder: NotificationCompat.Builder
+    lateinit var baseNotificationBuilder: NotificationCompat.Builder
 
     companion object {
         val timeRunInMillis = MutableLiveData<Long>()
@@ -70,8 +70,8 @@ class TrackingService : LifecycleService() {
 
     @SuppressLint("VisibleForTests")
     override fun onCreate() {
-        currentNotificationBuilder = baseNotificationBuilder
         super.onCreate()
+        currentNotificationBuilder = baseNotificationBuilder
         postInitialValues()
         isTracking.observe(this) {
             updateLocationTracking(it)
@@ -123,10 +123,11 @@ class TrackingService : LifecycleService() {
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        currentNotificationBuilder.javaClass.getDeclaredField("mAction").apply {
+        currentNotificationBuilder.javaClass.getDeclaredField("mActions").apply {
             isAccessible = true
             set(currentNotificationBuilder, ArrayList<NotificationCompat.Action>())
         }
+
         currentNotificationBuilder = baseNotificationBuilder
             .addAction(R.drawable.ic_run_24dp, notificationActionText, pendingIntent)
         notificationManager.notify(NOTIFICATION_ID, currentNotificationBuilder.build())
