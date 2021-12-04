@@ -72,11 +72,13 @@ class TrackingService : LifecycleService() {
                         startForegroundService()
                         isFirstRun = false
                     } else {
+                        startForegroundService()
                         Log.d(TAG, "Resuming service")
                     }
                     Log.d(TAG, "Started or resumed service")
                 }
                 ACTION_PAUSE_SERVICE -> {
+                    pauseService()
                     Log.d(TAG, "Started or resumed service")
                 }
                 ACTION_STOP_SERVICE -> {
@@ -168,6 +170,10 @@ class TrackingService : LifecycleService() {
             .setContentIntent(getMainActivityPendingIntent())
 
         startForeground(NOTIFICATION_ID, notificationBuilder.build())
+    }
+
+    private fun pauseService() {
+        isTracking.postValue(false)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
