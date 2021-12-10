@@ -8,8 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.lyvetech.runorrun.R
+import com.lyvetech.runorrun.adapter.RunAdapter
 import com.lyvetech.runorrun.databinding.FragmentRunBinding
 import com.lyvetech.runorrun.ui.viewmodels.MainViewModel
 import com.lyvetech.runorrun.utils.Constants.Companion.REQUEST_LOCATION_PERMISSION
@@ -23,6 +26,7 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
     private val viewModel: MainViewModel by viewModels()
     private lateinit var binding: FragmentRunBinding
+    private lateinit var runAdapter: RunAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,10 +44,21 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requestLocationPermissions()
+        setUpRecyclerView()
+
+        viewModel.runSortedByDate.observe(viewLifecycleOwner, Observer {
+            runAdapter.submitList(it)
+        })
 
         binding.fabAdd.setOnClickListener {
             findNavController().navigate(R.id.action_runFragment_to_trackingFragment)
         }
+    }
+
+    private fun setUpRecyclerView() = binding.rvRun.apply {
+        runAdapter = RunAdapter()
+        adapter = runAdapter
+        layoutManager = LinearLayoutManager(requireContext())
     }
 
     private fun requestLocationPermissions() {
