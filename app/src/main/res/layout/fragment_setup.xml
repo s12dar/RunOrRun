@@ -6,6 +6,73 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragments.SetupFragment">
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_user_name"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:hint="@string/hint_enter_your_name"
+        app:boxBackgroundColor="@color/transparent"
+        app:boxCornerRadiusBottomEnd="@dimen/text_field_corner"
+        app:boxCornerRadiusBottomStart="@dimen/text_field_corner"
+        app:boxCornerRadiusTopEnd="@dimen/text_field_corner"
+        app:boxCornerRadiusTopStart="@dimen/text_field_corner"
+        app:boxStrokeColor="@color/textColorSecondary"
+        app:errorEnabled="true"
+        app:hintAnimationEnabled="true"
+        app:hintTextColor="@color/black_dinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/fab_add"
+        app:layout_constraintTop_toTopOf="parent"
+        app:startIconDrawable="@drawable/ic_title_20dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_user_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionNext"
+            android:maxLines="1"
+            android:padding="@dimen/field_padding"
+            android:textCursorDrawable="@drawable/custom_cursor" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_user_weight"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:hint="@string/hint_enter_your_weight"
+        app:boxBackgroundColor="@color/transparent"
+        app:boxCornerRadiusBottomEnd="@dimen/text_field_corner"
+        app:boxCornerRadiusBottomStart="@dimen/text_field_corner"
+        app:boxCornerRadiusTopEnd="@dimen/text_field_corner"
+        app:boxCornerRadiusTopStart="@dimen/text_field_corner"
+        app:boxStrokeColor="@color/textColorSecondary"
+        app:errorEnabled="true"
+        app:hintAnimationEnabled="true"
+        app:hintTextColor="@color/black_dinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/til_user_name"
+        app:startIconDrawable="@drawable/ic_weight_20dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_user_weight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionNext"
+            android:maxLines="1"
+            android:inputType="number"
+            android:padding="@dimen/field_padding"
+            android:textCursorDrawable="@drawable/custom_cursor" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add"
         android:layout_width="wrap_content"

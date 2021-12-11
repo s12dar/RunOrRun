@@ -4,7 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/bg_bottom_sheet.xml" value="0.141" />
+        <entry key="app/src/main/res/drawable/custom_cursor.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_continue_24dp.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_title_20dp.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/bottom_sheet_tracking.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_run.xml" value="0.1" />

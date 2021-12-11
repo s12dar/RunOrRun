@@ -3,6 +3,7 @@ package com.lyvetech.runorrun.ui.fragments
 import android.Manifest
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -26,6 +27,7 @@ import pub.devrel.easypermissions.EasyPermissions
 @AndroidEntryPoint
 class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
+    private val TAG = RunFragment::class.qualifiedName
     private val viewModel: MainViewModel by viewModels()
     private lateinit var binding: FragmentRunBinding
     private lateinit var runAdapter: RunAdapter
@@ -46,7 +48,6 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requestLocationPermissions()
-        setUpRecyclerView()
 
         when (viewModel.sortType) {
             SortType.DATE -> binding.spFilter.setSelection(0)
@@ -75,8 +76,14 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
 
+        Log.i(TAG, "B")
+        setUpRecyclerView()
+
         viewModel.runs.observe(viewLifecycleOwner) {
             runAdapter.submitList(it)
+            for (i in it) {
+                Log.i(TAG, TrackingUtility.getFormattedStopWatchTime(i.timeInMillis))
+            }
         }
 
         binding.fabAdd.setOnClickListener {

@@ -2,6 +2,7 @@ package com.lyvetech.runorrun.ui.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -35,6 +36,7 @@ import com.lyvetech.runorrun.utils.TrackingUtility
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_tracking.*
 import java.util.*
+import javax.inject.Inject
 import kotlin.math.round
 
 @AndroidEntryPoint
@@ -52,7 +54,8 @@ class TrackingFragment : Fragment() {
 
     private var map: GoogleMap? = null
 
-    private var mWeight = 80
+    @set:Inject
+    var mWeight = 89f
 
     private var currTimeMillis = 0L
     private var mIsTracking = false
@@ -87,6 +90,8 @@ class TrackingFragment : Fragment() {
             map = it
             addAllPolylines()
         }
+
+        Log.i(TAG, "Hi Serdar, $mWeight ")
 
         bottomSheetDialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
         bottomSheetDialog.show()

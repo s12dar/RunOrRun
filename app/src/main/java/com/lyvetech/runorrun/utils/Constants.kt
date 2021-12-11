@@ -31,5 +31,14 @@ class Constants {
         const val POLYLINE_WIDTH = 8f
         const val MAP_ZOOM = 5f
         const val TIMER_UPDATE_INTERVAL = 50L
+
+        /**
+         * SHARED PREFERENCES
+         */
+        const val SHARED_PREFERENCES_NAME = "sharedPref"
+        const val KEY_FIRST_TIME_TOGGLE = "KEY_FIRST_TIME_TOGGLE"
+        const val KEY_NAME = "KEY_NAME"
+        const val KEY_WEIGHT = "KEY_WEIGHT"
+
     }
 }
