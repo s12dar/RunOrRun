@@ -13,4 +13,18 @@
     <string name="tv_lets_go">Let\'s go</string>
     <string name="btn_start">Start</string>
     <string name="btn_finish_run">Finish run</string>
+
+    <!-- SET UP FRAGMENT -->
+    <string name="hint_enter_your_name">Enter your name</string>
+    <string name="hint_enter_your_weight">Enter your weight</string>
+    <string name="err_empty_field">Oops, this field couldn\'t be empty</string>
+
+    <!-- SORT SPINNER -->
+    <string-array name="filter_options">
+        <item>Date</item>
+        <item>Running Time</item>
+        <item>Distance</item>
+        <item>Average Speed</item>
+        <item>Calories Burned</item>
+    </string-array>
 </resources>
