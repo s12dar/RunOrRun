@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -16,6 +17,7 @@ import com.lyvetech.runorrun.adapter.RunAdapter
 import com.lyvetech.runorrun.databinding.FragmentRunBinding
 import com.lyvetech.runorrun.ui.viewmodels.MainViewModel
 import com.lyvetech.runorrun.utils.Constants.Companion.REQUEST_LOCATION_PERMISSION
+import com.lyvetech.runorrun.utils.SortType
 import com.lyvetech.runorrun.utils.TrackingUtility
 import dagger.hilt.android.AndroidEntryPoint
 import pub.devrel.easypermissions.AppSettingsDialog
@@ -46,9 +48,36 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         requestLocationPermissions()
         setUpRecyclerView()
 
-        viewModel.runSortedByDate.observe(viewLifecycleOwner, Observer {
+        when (viewModel.sortType) {
+            SortType.DATE -> binding.spFilter.setSelection(0)
+            SortType.RUNNING_TIME -> binding.spFilter.setSelection(1)
+            SortType.DISTANCE -> binding.spFilter.setSelection(2)
+            SortType.AVG_SPEED -> binding.spFilter.setSelection(3)
+            SortType.CALORIES_BURNT -> binding.spFilter.setSelection(4)
+        }
+
+        binding.spFilter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                adapterView: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                when (position) {
+                    0 -> viewModel.sortRuns(SortType.DATE)
+                    1 -> viewModel.sortRuns(SortType.RUNNING_TIME)
+                    2 -> viewModel.sortRuns(SortType.DISTANCE)
+                    3 -> viewModel.sortRuns(SortType.AVG_SPEED)
+                    4 -> viewModel.sortRuns(SortType.CALORIES_BURNT)
+                }
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
+        }
+
+        viewModel.runs.observe(viewLifecycleOwner) {
             runAdapter.submitList(it)
-        })
+        }
 
         binding.fabAdd.setOnClickListener {
             findNavController().navigate(R.id.action_runFragment_to_trackingFragment)
