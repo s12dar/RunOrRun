@@ -147,11 +147,11 @@ class TrackingFragment : Fragment() {
     private fun updateTracking(isTracking: Boolean) {
         mIsTracking = isTracking
         if (!isTracking) {
-            mBtnStart.text = R.string.btn_start.toString()
+            mBtnStart.text = getString(R.string.btn_start_run)
             mBtnFinish.visibility = View.VISIBLE
         } else {
             binding.fabCancelRun.visibility = View.VISIBLE
-            mBtnStart.text = R.string.btn_finish_run.toString()
+            mBtnStart.text = getString(R.string.btn_pause_run)
             mBtnFinish.visibility = View.GONE
         }
     }

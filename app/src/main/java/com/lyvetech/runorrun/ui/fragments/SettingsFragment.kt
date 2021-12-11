@@ -45,6 +45,7 @@ class SettingsFragment : Fragment() {
 
         binding.btnSaveProfile.setOnClickListener {
             if (isFilledWhenBtnSavePressed()) {
+                setUpUserDetails()
                 Snackbar.make(view, "Saved changes", Snackbar.LENGTH_LONG).show()
             } else {
                 Snackbar.make(view, "Oops, fields can't be empty..", Snackbar.LENGTH_LONG).show()
@@ -80,7 +81,6 @@ class SettingsFragment : Fragment() {
 
         binding.clEditProfileDetails.visibility = View.GONE
         binding.clProfileDetails.visibility = View.VISIBLE
-
         return true
     }
 }

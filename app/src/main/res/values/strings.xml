@@ -11,7 +11,8 @@
     <!-- TRACKING FRAGMENT -->
     <string name="tv_timer">00:00:00:00</string>
     <string name="tv_lets_go">Let\'s go</string>
-    <string name="btn_start">Start</string>
+    <string name="btn_start_run">Start run</string>
+    <string name="btn_pause_run">Pause run</string>
     <string name="btn_finish_run">Finish run</string>
 
     <!-- SET UP FRAGMENT -->
