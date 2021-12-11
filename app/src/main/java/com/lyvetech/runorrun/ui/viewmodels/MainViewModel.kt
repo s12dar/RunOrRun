@@ -12,8 +12,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    val mainRepository: MainRepository
-): ViewModel() {
+    private val mainRepository: MainRepository
+) : ViewModel() {
 
     private val runSortedByDate = mainRepository.getAllRunsSortedByDate()
     private val runSortedByDistance = mainRepository.getAllRunsSortedByDistance()
@@ -63,7 +63,7 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun sortRuns(sortType: SortType) = when(sortType) {
+    fun sortRuns(sortType: SortType) = when (sortType) {
         SortType.DATE -> runSortedByDate.value?.let {
             runs.value = it
         }
