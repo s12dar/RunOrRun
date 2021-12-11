@@ -19,6 +19,12 @@
     <string name="hint_enter_your_weight">Enter your weight</string>
     <string name="err_empty_field">Oops, this field couldn\'t be empty</string>
 
+    <!-- SETTINGS FRAGMENT -->
+    <string name="tv_user_details">User details</string>
+    <string name="tv_user_details_edit">User details edit</string>
+    <string name="btn_edit">Edit</string>
+    <string name="btn_save">Save</string>
+
     <!-- SORT SPINNER -->
     <string-array name="filter_options">
         <item>Date</item>
