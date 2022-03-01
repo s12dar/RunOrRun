@@ -1,5 +1,5 @@
 ## RunOrRun 🏃‍♂️
-RunOrRun is run tracker application, using best practices in modern Android development. 
+RunOrRun is run tracker application, using best practices of Android development. 
 
 ## Tech stack 🏗
 * [Kotlin](https://kotlinlang.org/)
